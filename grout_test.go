@@ -36,6 +36,9 @@ func TestServeHTTP(t *testing.T) {
 	req, _ := http.NewRequest("GET", "http://localhost/blogs/some-crummy-blog/235", nil)
 	rr := httptest.NewRecorder()
 	r.ServeHTTP(rr, req)
+	if rr.Code == 404 {
+		t.Errorf("We actually found the page...")
+	}
 	if b.String() != "name: some-crummy-blog\nothername: 235\n" {
 		t.Errorf("Did not get variable name nor value")
 	}

@@ -58,6 +58,7 @@ func (routes *RouteMux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				data[name] = matches[i]
 			}
 			route.handler(w, r, data)
+			return
 		}
 	}
 	http.NotFound(w, r)
