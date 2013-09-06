@@ -3,7 +3,9 @@
 ## Simple routing for Golang
 
 This routing is very similar to Django style routes. You just write some named
-regular expressions and then the data shows up in your handler.
+regular expressions and then the data shows up in your handler. This matches routes in 
+the order in which they are added. So you don't want "/" as the first route you add
+because that will match anything that starts with a "/".
 
 This Router looks for handler functions with this signature:
 
