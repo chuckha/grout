@@ -1,6 +1,6 @@
 # Grout
 
-## Simple routing for Golang
+## Simple routing for Go
 
 This routing is very similar to Django style routes. You just write some named
 regular expressions and then the data shows up in your handler. This matches routes in 
