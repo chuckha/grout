@@ -1,7 +1,6 @@
 package grout
 
 import (
-	"fmt"
 	"net/http"
 	"regexp"
 )
@@ -58,9 +57,8 @@ func (routes *RouteMux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				}
 				data[name] = matches[i]
 			}
-			fmt.Println(data)
 			route.handler(w, r, data)
 		}
 	}
-
+	http.NotFound(w, r)
 }

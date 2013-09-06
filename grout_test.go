@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -33,8 +34,23 @@ func TestServeHTTP(t *testing.T) {
 	}
 	r.Route(`/blogs/(?P<name>[a-z][a-z_-]+[a-z])/(?P<othername>[0-9]+)`, handler)
 	req, _ := http.NewRequest("GET", "http://localhost/blogs/some-crummy-blog/235", nil)
-	r.ServeHTTP(nil, req)
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
 	if b.String() != "name: some-crummy-blog\nothername: 235\n" {
 		t.Errorf("Did not get variable name nor value")
+	}
+}
+
+func Test404(t *testing.T) {
+	r := NewRouteMux()
+	handler := func(w http.ResponseWriter, r *http.Request, m map[string]string) {}
+	r.Route(`/blogs/(?P<name>[a-z][a-z_-]+[a-z])/(?P<othername>[0-9]+)`, handler)
+	req, _ := http.NewRequest("GET", "http://localhost/no+match/here", nil)
+	rr := httptest.NewRecorder()
+
+	r.ServeHTTP(rr, req)
+
+	if rr.Code != 404 {
+		t.Errorf("response should be 404")
 	}
 }
