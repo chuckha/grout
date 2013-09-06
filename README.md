@@ -11,6 +11,8 @@ This Router looks for handler functions with this signature:
 
 It's the same as http.Handler except it has an extra map[string]string associated with it.
 
+If a route is not found this returns a 404.
+
 ## Installation
 
 `$ go get github.com/chuckha/grout`
